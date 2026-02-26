@@ -1,0 +1,12 @@
+# VS / Visual Studio cache
+.vs/
+
+# VS Code
+.vscode/
+
+# Logs / cache
+*.log
+
+# Windows junk
+Thumbs.db
+Desktop.ini

@@ -1,85 +1,305 @@
-/* Camada 1: Mobile */
-
+/* ==========================================
+   CAMADA 1: MOBILE (Padrão Global)
+   ========================================== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Garante que o site ocupe a altura toda (Footer no fundo) */
 body {
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    /* Garante expansão total */
 }
 
 header {
-  background: #222;
-  color: #fff;
-  padding: 15px 12px 15px 12px;
-  width: 100%;
+    background: #222;
+    color: #fff;
+    padding: 15px;
+    width: 100%;
+    /* Colado nas laterais */
+    position: relative;
+    z-index: 1100;
 }
 
-.conteudo {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
+/* ======= Navegação (menu hambúrguer) ======= */
+.site-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+}
+
+.site-nav .brand{
+    font-weight:700;
+}
+
+.hamburger{
+    background:none;
+    border:0;
+    display:inline-flex;
+    flex-direction:column;
+    gap:4px;
+    padding:8px;
+    cursor:pointer;
+}
+
+.hamburger .bar{
+    width:24px;
+    height:2px;
+    background:#fff;
+    display:block;
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.site-nav{ position: relative; }
+
+.nav-links{
+    /* Mobile overlay: ocupa toda a viewport a partir do topo (ajustado via JS
+       para começar exatamente abaixo do header). */
+    position: fixed;
+    top: 0; /* será sobrescrito em tempo de execução para header height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.92);
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: none;
+    transform-origin: top center;
+    transform: translateY(-6px) scaleY(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 180ms ease, opacity 180ms ease;
+    z-index: 1000; /* abaixo do header (header tem 1100) */
+}
+
+.site-nav.open .nav-links{
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Links dentro do overlay (mobile) */
+.nav-links a{
+    color: #fff;
+    font-size: 1.15rem;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+.nav-links a:hover,
+.nav-links a:focus{
+    color: #ffd54f;
+    background: rgba(255,255,255,0.04);
+    transform: translateX(6px);
+    outline: none;
+}
+
+/* Transformar as barras em X quando aberto */
+.site-nav.open .hamburger .bar:nth-child(1){
+    transform: translateY(6px) rotate(45deg);
+}
+.site-nav.open .hamburger .bar:nth-child(2){
+    opacity: 0;
+    transform: translateX(-6px);
+}
+.site-nav.open .hamburger .bar:nth-child(3){
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Desktop / tablet: mostra links inline e esconde hamburger */
+@media (min-width: 768px) {
+    .hamburger{ display:none; }
+    .nav-links{ position:static; transform:none; opacity:1; pointer-events:auto; background:transparent; box-shadow:none; padding:0; flex-direction:row; gap:16px; min-width:unset; inset: auto; }
+    .nav-links a{ padding:0; color: inherit; }
+}
+
+/* Wrapper ocupa todo o espaço entre Header e Footer */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
 }
 
 aside {
-  background: #666;
-  padding: 15px 9px 15px 9px;
-  width: 100%;
+    background: #eee;
+    padding: 15px;
+    width: 100%;
+}
+
+/* Mobile: transforma o aside em um menu fixo inferior */
+@media (max-width: 767px) {
+    aside {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 64px;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, #ffffffcc, #f6f6f6cc);
+        z-index: 1050;
+        box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        backdrop-filter: blur(6px);
+    }
+
+    aside ul{
+        display: flex;
+        gap: 12px;
+        list-style: none;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0;
+    }
+
+    aside li{ margin: 0; }
+
+    aside a{
+        color: #222;
+        text-decoration: none;
+        font-size: 0.95rem;
+        padding: 8px 12px;
+        display: inline-block;
+        font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    aside a:hover, aside a:focus{
+        color: #111;
+        background: linear-gradient(90deg, rgba(255,215,80,0.12), rgba(255,215,80,0.06));
+        transform: translateY(-4px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        border-radius: 10px;
+        outline: none;
+    }
+
+    /* Evita que o conteúdo principal fique escondido pelo menu inferior */
+    main{ padding-bottom: 110px; }
 }
 
 main {
-  padding: 20px 18px 20px 18px;
-  flex: 1;
-  text-align: center;
-  background: #fff;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+    background: #fff;
 }
 
 footer {
-  background: #222;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  width: 100%;
-}
-
-/* Camada 2: Tablet (min-width: 768px) */
-
-@media (min-width: 768px) {
-  .conteudo {
-    flex-direction: row;
-  }
-
-  aside {
-    width: 200px;
-  }
-
-  main {
-    text-align: left;
-  }
-}
-
-/* Camada 3: Monitor padrão (min-width: 1024px) */
-
-@media (min-width: 1024px) {
-  aside {
-    width: 250px;
-  }
-}
-
-/* Camada 4: Monitor ultra-wide (min-width: 1440px) */
-
-@media (min-width: 1440px) {
-  body,
-  .conteudo,
-  header,
-  footer {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
     width: 100%;
-  }
+    /* Colado nas laterais */
+}
+
+/* ==========================================
+   CAMADA 2: TABLETS (min-width: 768px)
+   ========================================== */
+@media (min-width: 768px) {
+    .wrapper {
+        flex-direction: row;
+        /* Coloca Sidenav e Main lado a lado */
+    }
+
+    aside {
+        width: 200px;
+        /* Largura fixa para o menu */
+    }
+
+    main {
+        text-align: left;
+    }
+}
+
+/* Estilos da sidebar para desktop: mais agradável e legível */
+@media (min-width: 768px) {
+    aside{
+        background: linear-gradient(180deg, #fbfbfb, #f0f0f0);
+        padding: 20px 14px;
+        box-shadow: 4px 0 18px rgba(14, 20, 30, 0.04);
+        border-right: 1px solid rgba(0,0,0,0.04);
+        height: auto;
+    }
+
+    aside ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    aside li{
+        margin-bottom: 10px;
+    }
+
+    aside a{
+        display: block;
+        color: #222;
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+        font-weight: 500;
+        transition: background 160ms ease, transform 160ms ease, color 160ms ease;
+    }
+
+    aside a:hover,
+    aside a:focus{
+        background: linear-gradient(90deg, rgba(255,215,80,0.08), rgba(255,215,80,0.03));
+        transform: translateX(6px);
+        color: #111;
+        box-shadow: 0 10px 18px rgba(0,0,0,0.04);
+        outline: none;
+    }
+
+    /* Link ativo (exemplo) */
+    aside a.active{
+        background: #fff;
+        box-shadow: inset 3px 0 0 #ffd54f;
+        color: #111;
+    }
+}
+
+/* ==========================================
+   CAMADA 3: SEU MONITOR (min-width: 1024px) 
+   ========================================== */
+@media (min-width: 1024px) {
+    aside {
+        width: 250px;
+    }
+}
+
+/* ==========================================
+   CAMADA 4: TELAS ULTRA-LARGAS (min-width: 1440px)
+   ========================================== */
+@media (min-width: 1440px) {
+
+    /* Mesmo em telas gigantes, mantemos width 100% 
+       para ficar colado nas laterais. */
+    body,
+    .wrapper,
+    header,
+    footer {
+        width: 100%;
+    }
 }

@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aula 01 - Estrutura inicial</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
 
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 01 - Layout Fluido</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
     <header>
-      <nav>
-        <span>Meu Site</span>
-        <a href="#">Home</a>
-        <a href="#">Sobre</a>
-      </nav>
+        <nav class="site-nav">
+            <div class="brand">MeuSite</div>
+            <button class="hamburger" aria-label="Abrir menu" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Sobre</a>
+            </div>
+        </nav>
     </header>
 
-    <div class="conteudo">
-      <aside>
-        <ul>
-          <li><a href="#">Painel</a></li>
-          <li><a href="#">Configurações</a></li>
-          <li><a href="#">Relatórios</a></li>
-        </ul>
-      </aside>
+    <div class="wrapper">
+        <aside>
+            <ul>
+                <li><a href="#">Painel</a></li>
+                <li><a href="#">Configurações</a></li>
+                <li><a href="#">Relatórios</a></li>
+            </ul>
+        </aside>
 
-      <main>
-        <h1>Desenvolvimento Mobile First</h1>
-        <p>Layout 100% Responsivo</p>
-      </main>
+        <main>
+            <h1>Desenvolvimento Mobile First</h1>
+            <p>Este conteúdo agora ocupa 100% da largura disponível.</p>
+        </main>
     </div>
 
     <footer>
-      <p>&copy; 2026 - Programação Web Responsiva</p>
+        <p>&copy; 2026 - Aula de Web Design Responsivo</p>
     </footer>
-  </body>
+
+    <script src="js/script.js" defer></script>
+</body>
+
 </html>
